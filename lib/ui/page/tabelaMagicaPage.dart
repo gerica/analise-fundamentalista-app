@@ -16,7 +16,7 @@ class TabelaMagicaPage extends StatefulWidget {
   _TabelaMagicaPageState createState() => _TabelaMagicaPageState();
 }
 
-class _TabelaMagicaPageState extends State<TabelaMagicaPage> {
+class _TabelaMagicaPageState extends State<TabelaMagicaPage> with AfterLayoutMixin {
   HDTRefreshController _hdtRefreshController = HDTRefreshController();
 
   static const int sortName = 0;
@@ -27,8 +27,13 @@ class _TabelaMagicaPageState extends State<TabelaMagicaPage> {
 
   @override
   void initState() {
-    this._analizarPapeis();
+    // this._analizarPapeis();
     super.initState();
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    this._analizarPapeis();
   }
 
   Future<void> _analizarPapeis() async {

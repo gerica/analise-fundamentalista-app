@@ -21,7 +21,6 @@ class PapelViewModel extends BaseViewModel {
     } on Exception catch (err) {
       tratarErro(err);
     }
-    developer.log('chegou aqui', name: toString());
     setLoading(false);
   }
 }
