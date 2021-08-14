@@ -1,10 +1,9 @@
-import 'package:after_layout/after_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fundamentalista_app/domain/model/Papel.dart';
-import 'package:fundamentalista_app/ui/viewModel/PapelViewModel.dart';
-import 'package:provider/provider.dart';
-import 'dart:developer' as developer;
+import 'package:fundamentalista_app/ui/page/configurarPage.dart';
+import 'package:fundamentalista_app/ui/page/tabelaMagicaPage.dart';
+import 'package:fundamentalista_app/widget/PrimaryButton.dart';
+// import 'dart:developer' as developer;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,33 +12,43 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with AfterLayoutMixin {
-  @override
-  void afterFirstLayout(BuildContext context) async {
-    await _analizarPapeis();
-  }
-
-  Future<void> _analizarPapeis() async {
-    var viewModel = Provider.of<PapelViewModel>(context, listen: false);
-    await viewModel.analisar();
-  }
-
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text('Fundamentalistas'),
       ),
-      body: _buildContent(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            PrimaryButton(
+              width: size.width * 0.7,
+              titleText: "Tabela mágica",
+              textStyle: Theme.of(context).textTheme.button,
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => TabelaMagicaPage(),
+                ),
+              ),
+            ),
+            SizedBox(height: 15),
+            PrimaryButton(
+              width: size.width * 0.7,
+              titleText: "Configurar",
+              textStyle: Theme.of(context).textTheme.button,
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => ConfigurarPage(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
-  }
-
-  Widget _buildContent() {
-    var lista = context.watch<PapelViewModel>().lista;
-    lista.forEach((Papel papel) => {
-          developer.log('Papel - ${papel.papel}', name: 'ui.page.HomePage'),
-        });
-    return Container(child: Text("Sucesso"));
   }
 }

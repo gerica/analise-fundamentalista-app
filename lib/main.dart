@@ -23,12 +23,17 @@ class FundamentalistaAPP extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        primaryColor: Colors.green,
         primarySwatch: Colors.amber,
         scaffoldBackgroundColor: Colors.grey[100],
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
+        ),
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.amber, //  <-- light color
+          textTheme: ButtonTextTheme.primary, //  <-- dark text for light background
         ),
       ),
       home: const HomePage(),
