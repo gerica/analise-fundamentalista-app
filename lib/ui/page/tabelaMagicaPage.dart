@@ -7,7 +7,8 @@ import 'package:fundamentalista_app/ui/viewModel/PapelViewModel.dart';
 import 'package:fundamentalista_app/widget/DummyCard.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
 import 'package:provider/provider.dart';
-// import 'dart:developer' as developer;
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:developer' as developer;
 
 class TabelaMagicaPage extends StatefulWidget {
   const TabelaMagicaPage({Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class _TabelaMagicaPageState extends State<TabelaMagicaPage> with AfterLayoutMix
   bool isAscending = true;
   PapelData papelData = PapelData();
   int sortType = sortName;
+  String _urlFundamento = 'http://www.fundamentus.com.br/detalhes.php?papel=';
 
   @override
   void initState() {
@@ -140,11 +142,23 @@ class _TabelaMagicaPageState extends State<TabelaMagicaPage> with AfterLayoutMix
         onPressed: () {
           sortType = sortStatus;
           isAscending = !isAscending;
-          // user.sortStatus(isAscending);
+          papelData.sortRank(isAscending);
           setState(() {});
         },
       ),
-      _getTitleItemWidget('Cotação', 100),
+      TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+        ),
+        child: _getTitleItemWidget('Cotação' + (sortType == sortStatus ? (isAscending ? '↓' : '↑') : ''), 100),
+        onPressed: () {
+          sortType = sortStatus;
+          isAscending = !isAscending;
+          papelData.sortCotacao(isAscending);
+          setState(() {});
+        },
+      ),
+      // _getTitleItemWidget('Cotação', 100),
       _getTitleItemWidget('P/l', 100),
       _getTitleItemWidget('P/VP', 100),
       _getTitleItemWidget('PSR', 100),
@@ -190,13 +204,17 @@ class _TabelaMagicaPageState extends State<TabelaMagicaPage> with AfterLayoutMix
   }
 
   Widget _generateFirstColumnRow(BuildContext context, int index) {
-    return Container(
-      // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0), color: Colors.grey[100], border: Border.all()),
-      child: Text(papelData.lista[index].papel as String),
-      width: 100,
-      height: 52,
-      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-      alignment: Alignment.centerLeft,
+    String papel = papelData.lista[index].papel as String;
+    return GestureDetector(
+      onTap: () => _launchURL(papel),
+      child: Container(
+        // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0), color: Colors.grey[100], border: Border.all()),
+        child: Text(papel),
+        width: 100,
+        height: 52,
+        padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+        alignment: Alignment.centerLeft,
+      ),
     );
   }
 
@@ -230,6 +248,19 @@ class _TabelaMagicaPageState extends State<TabelaMagicaPage> with AfterLayoutMix
       ],
     );
   }
+
+  _launchURL(String papel) async {
+    developer.log("Abrir link fundamento: $papel", name: toString());
+    if (papel.isEmpty) {
+      return;
+    }
+    var url = '$_urlFundamento$papel';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }
 
 class PapelData {
@@ -245,9 +276,7 @@ class PapelData {
     });
   }
 
-  ///
-  /// sort with Status and Name as the 2nd Sort
-  void sortStatus(bool isAscending) {
+  void sortRank(bool isAscending) {
     lista.sort((a, b) {
       if (isAscending) {
         if (a.rank > b.rank) {
@@ -257,6 +286,26 @@ class PapelData {
         }
       }
       if (a.rank > b.rank) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
+  void sortCotacao(bool isAscending) {
+    lista.sort((a, b) {
+      Fundamento fundA = a.fundamentos.firstWhere((fund) => fund.descricao == 'Cotação') as Fundamento;
+      Fundamento fundB = b.fundamentos.firstWhere((fund) => fund.descricao == 'Cotação') as Fundamento;
+
+      if (isAscending) {
+        if (fundA.valor > fundB.valor) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
+      if (fundA.valor > fundB.valor) {
         return -1;
       } else {
         return 1;

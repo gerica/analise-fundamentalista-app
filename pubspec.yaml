@@ -39,6 +39,7 @@ dependencies:
   lint: ^1.5.3
   after_layout: ^1.1.0
   horizontal_data_table: ^3.4.2
+  url_launcher: ^6.0.8
 
 dev_dependencies:
   flutter_test:

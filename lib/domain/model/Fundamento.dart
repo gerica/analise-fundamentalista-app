@@ -1,6 +1,6 @@
 class Fundamento {
   String? descricao;
-  double? valor;
+  double valor = 0;
 
   Fundamento.fromJson(Map<String, dynamic> parsedJson) {
     descricao = parsedJson['descricao'] as String;
