@@ -12,7 +12,7 @@ class PapelViewModel extends BaseViewModel {
 
   Future<void> analisar() async {
     init();
-    developer.log('analisar', name: 'ui.viewModel.PapelViewModel');
+    developer.log('analisar', name: toString());
     setLoading(true);
     try {
       _lista = await _papelRepository.analisar();
@@ -21,6 +21,7 @@ class PapelViewModel extends BaseViewModel {
     } on Exception catch (err) {
       tratarErro(err);
     }
+    developer.log('chegou aqui', name: toString());
     setLoading(false);
   }
 }

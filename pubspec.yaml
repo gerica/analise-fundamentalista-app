@@ -38,6 +38,7 @@ dependencies:
   graphql: ^5.0.0
   lint: ^1.5.3
   after_layout: ^1.1.0
+  horizontal_data_table: ^3.4.2
 
 dev_dependencies:
   flutter_test:

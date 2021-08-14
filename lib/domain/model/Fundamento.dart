@@ -4,9 +4,13 @@ class Fundamento {
 
   Fundamento.fromJson(Map<String, dynamic> parsedJson) {
     descricao = parsedJson['descricao'] as String;
-    dynamic valorTemp = parsedJson['papel'];
+    dynamic valorTemp = parsedJson['valor'];
     if (valorTemp != null) {
-      valor = valorTemp as double;
+      if (valorTemp is int) {
+        valor = (valorTemp as int).toDouble();
+      } else {
+        valor = valorTemp as double;
+      }
     }
   }
 }

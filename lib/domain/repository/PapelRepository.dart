@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:fundamentalista_app/domain/model/Papel.dart';
 import 'dart:developer' as developer;
 
@@ -28,17 +29,20 @@ class PapelRepository {
       ''',
       ),
     );
-
-    final QueryResult result = await _helper.client.query(options);
-    if (result.hasException) {
-      developer.log('analisar error', name: 'domain.repository.PapelRepository', error: result.exception.toString());
-    }
-    developer.log('analisar - sucesso', name: 'domain.repository.PapelRepository');
-    final List<dynamic> listaPapeis = result.data!['papelAnalizar'] as List<dynamic>;
-    if (listaPapeis.isNotEmpty) {
-      listaPapeis.forEach((dynamic parsedJson) => {
-            resultado.add(Papel.fromJson(parsedJson as Map<String, dynamic>)),
-          });
+    try {
+      final QueryResult result = await _helper.client.query(options);
+      if (result.hasException) {
+        developer.log('analisar error', name: 'domain.repository.PapelRepository', error: result.exception.toString());
+      }
+      developer.log('analisar - sucesso', name: 'domain.repository.PapelRepository');
+      final List<dynamic> listaPapeis = result.data!['papelAnalizar'] as List<dynamic>;
+      if (listaPapeis.isNotEmpty) {
+        listaPapeis.forEach((dynamic parsedJson) => {
+              resultado.add(Papel.fromJson(parsedJson as Map<String, dynamic>)),
+            });
+      }
+    } catch (error) {
+      throw new PlatformException(code: '400', message: error.toString());
     }
 
     return resultado;
