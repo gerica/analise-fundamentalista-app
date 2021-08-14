@@ -26,7 +26,7 @@ abstract class BaseViewModel with ChangeNotifier {
 
   tratarErro(Exception err) {
     developer.log(
-      'log app',
+      'Error',
       name: 'ui.viewModel',
       error: err,
     );

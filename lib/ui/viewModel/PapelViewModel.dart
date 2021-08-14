@@ -8,6 +8,8 @@ class PapelViewModel extends BaseViewModel {
   PapelViewModel();
   PapelRepository _papelRepository = PapelRepository();
 
+  List<Papel> get lista => _lista;
+
   Future<void> analisar() async {
     init();
     developer.log('analisar', name: 'ui.viewModel.PapelViewModel');
