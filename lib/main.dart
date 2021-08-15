@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fundamentalista_app/ui/page/homePage.dart';
 import 'package:fundamentalista_app/ui/viewModel/PapelViewModel.dart';
+import 'package:fundamentalista_app/ui/viewModel/ParametroViewModel.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -8,6 +9,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PapelViewModel()),
+        ChangeNotifierProvider(create: (_) => ParametroViewModel()),
       ],
       child: const FundamentalistaAPP(),
     ),

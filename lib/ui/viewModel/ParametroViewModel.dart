@@ -1,21 +1,21 @@
-import 'package:fundamentalista_app/domain/model/Papel.dart';
-import 'package:fundamentalista_app/domain/repository/PapelRepository.dart';
+import 'package:fundamentalista_app/domain/model/Parametro.dart';
+import 'package:fundamentalista_app/domain/repository/ParametroRepository.dart';
 import 'package:fundamentalista_app/ui/viewModel/BaseViewModel.dart';
 import 'dart:developer' as developer;
 
-class PapelViewModel extends BaseViewModel {
-  List<Papel> _lista = [];
-  PapelViewModel();
-  PapelRepository _papelRepository = PapelRepository();
+class ParametroViewModel extends BaseViewModel {
+  List<Parametro> _lista = [];
+  ParametroViewModel();
+  ParametroRepository _repository = ParametroRepository();
 
-  List<Papel> get lista => _lista;
+  List<Parametro> get lista => _lista;
 
-  Future<void> analisar() async {
+  Future<void> recuperar() async {
     init();
-    developer.log('analisar', name: toString());
+    developer.log('Recuperar', name: toString());
     setLoading(true);
     try {
-      _lista = await _papelRepository.analisar();
+      _lista = await _repository.recuperar();
 
       success = true;
     } on Exception catch (err) {
@@ -24,17 +24,17 @@ class PapelViewModel extends BaseViewModel {
     setLoading(false);
   }
 
-  Future<void> carga() async {
+  Future<void> alterar(Parametro parametro) async {
+    developer.log('Alterar', name: toString());
     init();
-    developer.log('Realizar carga', name: toString());
-    setLoading(true);
+    // setLoading(true);
     try {
-      message = await _papelRepository.carga();
-
+      message = await _repository.alterar(parametro);
       success = true;
+
     } on Exception catch (err) {
       tratarErro(err);
     }
-    setLoading(false);
+    // setLoading(false);
   }
 }
