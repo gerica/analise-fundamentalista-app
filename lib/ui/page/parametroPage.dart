@@ -1,20 +1,21 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fundamentalista_app/domain/model/Papel.dart';
 import 'package:fundamentalista_app/ui/page/BasePage.dart';
-import 'package:fundamentalista_app/ui/page/parametroPage.dart';
 import 'package:fundamentalista_app/ui/viewModel/PapelViewModel.dart';
 import 'package:fundamentalista_app/widget/PrimaryButton.dart';
 import 'package:provider/provider.dart';
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
-class ConfigurarPage extends StatefulWidget {
-  const ConfigurarPage({Key? key}) : super(key: key);
+class ParametroPage extends StatefulWidget {
+  const ParametroPage({Key? key}) : super(key: key);
 
   @override
-  _ConfigurarPageState createState() => _ConfigurarPageState();
+  _ParametroPageState createState() => _ParametroPageState();
 }
 
-class _ConfigurarPageState extends State<ConfigurarPage> with BasePage {
+class _ParametroPageState extends State<ParametroPage> with BasePage {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -32,25 +33,7 @@ class _ConfigurarPageState extends State<ConfigurarPage> with BasePage {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            PrimaryButton(
-              width: size.width * 0.7,
-              titleText: "Carga",
-              textStyle: Theme.of(context).textTheme.button,
-              onPressed: () {
-                this._carga(context);
-              },
-            ),
-            SizedBox(height: 15),
-            PrimaryButton(
-              width: size.width * 0.7,
-              titleText: "Parâmetros",
-              textStyle: Theme.of(context).textTheme.button,
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => ParametroPage(),
-                ),
-              ),
-            ),
+            Text('Params'),
           ],
         ),
       ),

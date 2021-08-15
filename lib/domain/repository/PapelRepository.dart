@@ -47,4 +47,27 @@ class PapelRepository {
 
     return resultado;
   }
+
+  Future<String> carga() async {
+    developer.log('Carga', name: this.toString());
+    final MutationOptions options = MutationOptions(
+      document: gql(
+        r'''
+         mutation {       
+          carga 
+         }
+      ''',
+      ),
+    );
+    try {
+      final QueryResult result = await _helper.client.mutate(options);
+      if (result.hasException) {
+        developer.log('analisar error', name: 'domain.repository.PapelRepository', error: result.exception.toString());
+      }
+      developer.log('analisar - sucesso', name: 'domain.repository.PapelRepository');
+      return result.data!['carga'] as String;
+    } catch (error) {
+      throw new PlatformException(code: '400', message: error.toString());
+    }
+  }
 }
