@@ -13,6 +13,8 @@ class ParametroRepository {
     List<Parametro> resultado = [];
 
     final QueryOptions options = QueryOptions(
+      // ignore cache data.
+      cacheRereadPolicy: CacheRereadPolicy.ignoreAll,
       document: gql(
         r'''
          query {       
@@ -35,14 +37,17 @@ class ParametroRepository {
       }
       final List<dynamic> listaRsult = result.data!['parametroMany'] as List<dynamic>;
       if (listaRsult.isNotEmpty) {
-        listaRsult.forEach((dynamic parsedJson) => {
-              resultado.add(Parametro.fromJson(parsedJson as Map<String, dynamic>)),
-            });
+        listaRsult.forEach((dynamic parsedJson) {
+          resultado.add(Parametro.fromJson(parsedJson as Map<String, dynamic>));
+        });
       }
     } catch (error) {
       throw new PlatformException(code: '400', message: error.toString());
     }
 
+    resultado.forEach((Parametro p) {
+      print('${p.descricao} valorL ${p.valorRef}');
+    });
     return resultado;
   }
 

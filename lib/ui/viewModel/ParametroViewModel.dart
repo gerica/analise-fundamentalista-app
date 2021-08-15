@@ -11,8 +11,9 @@ class ParametroViewModel extends BaseViewModel {
   List<Parametro> get lista => _lista;
 
   Future<void> recuperar() async {
-    init();
     developer.log('Recuperar', name: toString());
+    init();
+    _lista = [];
     setLoading(true);
     try {
       _lista = await _repository.recuperar();
@@ -31,7 +32,6 @@ class ParametroViewModel extends BaseViewModel {
     try {
       message = await _repository.alterar(parametro);
       success = true;
-
     } on Exception catch (err) {
       tratarErro(err);
     }

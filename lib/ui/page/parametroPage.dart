@@ -8,7 +8,7 @@ import 'package:fundamentalista_app/widget/FieldTextFund.dart';
 import 'package:fundamentalista_app/widget/InputHelper.dart';
 import 'package:fundamentalista_app/widget/PrimaryButton.dart';
 import 'package:provider/provider.dart';
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 class ParametroPage extends StatefulWidget {
   const ParametroPage({Key? key}) : super(key: key);
@@ -28,6 +28,7 @@ class _ParametroPageState extends State<ParametroPage> with BasePage {
   }
 
   _initDados() async {
+    developer.log("Init dados", name: this.toString());
     var viewModel = Provider.of<ParametroViewModel>(context, listen: false);
     await viewModel.recuperar();
   }
@@ -138,6 +139,7 @@ class _ParametroPageState extends State<ParametroPage> with BasePage {
             errorText: fieldError,
             controller: field.controller,
             onEditingComplete: () => FocusScope.of(context).nextFocus(),
+            textInputType: TextInputType.number,
           ),
         ),
       ],
