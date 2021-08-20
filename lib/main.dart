@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fundamentalista_app/ui/page/homePage.dart';
 import 'package:fundamentalista_app/ui/viewModel/PapelViewModel.dart';
@@ -23,22 +24,30 @@ class FundamentalistaAPP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: Colors.green,
-        primarySwatch: Colors.amber,
-        scaffoldBackgroundColor: Colors.grey[100],
-        appBarTheme: AppBarTheme(
-          iconTheme: IconThemeData(
-            color: Colors.white,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primaryColor: Colors.green,
+          primarySwatch: Colors.amber,
+          scaffoldBackgroundColor: Colors.grey[100],
+          appBarTheme: AppBarTheme(
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+          ),
+          buttonTheme: ButtonThemeData(
+            buttonColor: Colors.amber, //  <-- light color
+            textTheme: ButtonTextTheme.primary, //  <-- dark text for light background
           ),
         ),
-        buttonTheme: ButtonThemeData(
-          buttonColor: Colors.amber, //  <-- light color
-          textTheme: ButtonTextTheme.primary, //  <-- dark text for light background
-        ),
-      ),
-      home: const HomePage(),
-    );
+        home: AnimatedSplashScreen(
+          duration: 3000,
+          splash: Icons.monetization_on_outlined,
+          nextScreen: HomePage(),
+          splashTransition: SplashTransition.fadeTransition,
+          // pageTransitionType: PageTransitionType.scale,
+          backgroundColor: Colors.amber,
+        )
+        // home: const HomePage(),
+        );
   }
 }

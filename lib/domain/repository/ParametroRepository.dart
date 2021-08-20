@@ -32,9 +32,11 @@ class ParametroRepository {
     try {
       final QueryResult result = await _helper.client.query(options);
       if (result.hasException) {
-        developer.log('analisar error', name: this.toString(), error: result.exception.toString());
+        developer.log('recuperar error', name: this.toString(), error: result.exception.toString());
         throw new PlatformException(code: '400', message: result.exception.toString());
       }
+
+      developer.log('Recuperar Sucesso', name: this.toString());
       final List<dynamic> listaRsult = result.data!['parametroMany'] as List<dynamic>;
       if (listaRsult.isNotEmpty) {
         listaRsult.forEach((dynamic parsedJson) {
@@ -45,9 +47,9 @@ class ParametroRepository {
       throw new PlatformException(code: '400', message: error.toString());
     }
 
-    resultado.forEach((Parametro p) {
-      print('${p.descricao} valorL ${p.valorRef}');
-    });
+    // resultado.forEach((Parametro p) {
+    //   print('${p.descricao} valorL ${p.valorRef}');
+    // });
     return resultado;
   }
 

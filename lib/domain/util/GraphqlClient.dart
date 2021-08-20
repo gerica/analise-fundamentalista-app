@@ -4,13 +4,23 @@ class GraphQLHelper {
   late GraphQLClient client;
 
   GraphQLHelper.client() {
+    final policies = Policies(
+      fetch: FetchPolicy.networkOnly,
+    );
+
     final Link _link = HttpLink(
-      'http://192.168.0.13:5000',
+      // 'http://192.168.0.15:5000',
+      'https://fundamentalista-api.herokuapp.com/',
     );
 
     client = GraphQLClient(
       cache: GraphQLCache(),
       link: _link,
+      defaultPolicies: DefaultPolicies(
+        watchQuery: policies,
+        query: policies,
+        mutate: policies,
+      ),
     );
   }
 }
