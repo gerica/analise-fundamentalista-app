@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fundamentalista_app/ui/page/BasePage.dart';
-import 'package:fundamentalista_app/ui/page/parametroPage.dart';
 import 'package:fundamentalista_app/ui/viewModel/PapelViewModel.dart';
+import 'package:fundamentalista_app/widget/NavitationDrawer.dart';
 import 'package:fundamentalista_app/widget/PrimaryButton.dart';
 import 'package:provider/provider.dart';
 // import 'dart:developer' as developer;
@@ -28,6 +28,7 @@ class _ConfigurarPageState extends State<ConfigurarPage> with BasePage {
       appBar: AppBar(
         title: Text('Fundamentalistas'),
       ),
+      drawer: NavigationDrawer(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -39,17 +40,6 @@ class _ConfigurarPageState extends State<ConfigurarPage> with BasePage {
               onPressed: () {
                 this._carga(context);
               },
-            ),
-            SizedBox(height: 15),
-            PrimaryButton(
-              width: size.width * 0.7,
-              titleText: "Parâmetros",
-              textStyle: Theme.of(context).textTheme.button,
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => ParametroPage(),
-                ),
-              ),
             ),
           ],
         ),

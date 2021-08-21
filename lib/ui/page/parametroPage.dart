@@ -6,6 +6,7 @@ import 'package:fundamentalista_app/ui/viewModel/ParametroViewModel.dart';
 import 'package:fundamentalista_app/widget/CardFund.dart';
 import 'package:fundamentalista_app/widget/FieldTextFund.dart';
 import 'package:fundamentalista_app/widget/InputHelper.dart';
+import 'package:fundamentalista_app/widget/NavitationDrawer.dart';
 import 'package:fundamentalista_app/widget/PrimaryButton.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer' as developer;
@@ -43,6 +44,7 @@ class _ParametroPageState extends State<ParametroPage> with BasePage {
       appBar: AppBar(
         title: Text('Fundamentalistas'),
       ),
+      drawer: NavigationDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: _buildParams(context),

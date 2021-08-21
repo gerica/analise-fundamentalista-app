@@ -5,6 +5,7 @@ import 'package:fundamentalista_app/domain/model/Fundamento.dart';
 import 'package:fundamentalista_app/domain/model/Papel.dart';
 import 'package:fundamentalista_app/ui/viewModel/PapelViewModel.dart';
 import 'package:fundamentalista_app/widget/DummyCard.dart';
+import 'package:fundamentalista_app/widget/NavitationDrawer.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -50,6 +51,7 @@ class _TabelaMagicaPageState extends State<TabelaMagicaPage> with AfterLayoutMix
       appBar: AppBar(
         title: Text('Fundamentalistas'),
       ),
+      drawer: NavigationDrawer(),
       body: _getBodyWidget(),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
