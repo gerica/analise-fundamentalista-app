@@ -11,51 +11,57 @@ class NavigationDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Material(
-        // color: Color.fromRGBO(240, 216, 61, 1),
+        // color: Color.fromRGBO(100, 216, 61, 1),
         color: Colors.amber[700],
         child: ListView(
-          padding: padding,
           children: [
-            const SizedBox(height: 78),
-            _buildMenuItem(
-              text: "Inicial",
-              icon: Icons.home,
-              onClicked: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => HomePage(),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            _buildMenuItem(
-              text: "Tabela Mágica",
-              icon: Icons.table_chart,
-              onClicked: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => TabelaMagicaPage(),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Divider(color: Colors.white),
-            const SizedBox(height: 24),
-            _buildMenuItem(
-              text: "Configuração",
-              icon: Icons.settings,
-              onClicked: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => ConfigurarPage(),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            _buildMenuItem(
-              text: "Parâmetro",
-              icon: Icons.star_border,
-              onClicked: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => ParametroPage(),
-                ),
+            _buildHeader(name: "Rogério Cardoso"),
+            Container(
+              padding: padding,
+              child: Column(
+                children: [
+                  _buildMenuItem(
+                    text: "Inicial",
+                    icon: Icons.home,
+                    onClicked: () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => HomePage(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  _buildMenuItem(
+                    text: "Tabela Mágica",
+                    icon: Icons.table_chart,
+                    onClicked: () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => TabelaMagicaPage(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Divider(color: Colors.white),
+                  const SizedBox(height: 20),
+                  _buildMenuItem(
+                    text: "Configuração",
+                    icon: Icons.settings,
+                    onClicked: () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => ConfigurarPage(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  _buildMenuItem(
+                    text: "Parâmetro",
+                    icon: Icons.star_border,
+                    onClicked: () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => ParametroPage(),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -78,4 +84,22 @@ class NavigationDrawer extends StatelessWidget {
       onTap: onClicked,
     );
   }
+
+  Widget _buildHeader({required String name}) {
+    return Container(
+      padding: padding.add(EdgeInsets.symmetric(vertical: 40)),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 30,
+            backgroundImage: AssetImage('res/images/eu.jpeg'),
+          ),
+          SizedBox(width: 20),
+          Text(name, style: TextStyle(color: Colors.white, fontSize: 18)),
+        ],
+      ),
+    );
+  }
 }
+
+// AssetImage('graphics/background.png')
