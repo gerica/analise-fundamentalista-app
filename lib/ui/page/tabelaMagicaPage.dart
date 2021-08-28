@@ -60,7 +60,16 @@ class _TabelaMagicaPageState extends State<TabelaMagicaPage> with AfterLayoutMix
   Widget _getBodyWidget() {
     PapelViewModel viewModel = context.watch<PapelViewModel>();
     if (viewModel.loading) {
-      return DummyCard(tipo: 1);
+      return Column(
+        children: [
+          DummyCard(tipo: 1),
+          DummyCard(tipo: 1),
+          DummyCard(tipo: 1),
+          DummyCard(tipo: 1),
+          DummyCard(tipo: 1),
+          DummyCard(tipo: 1),
+        ],
+      );
     }
     if (viewModel.error) {
       return Center(

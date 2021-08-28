@@ -9,8 +9,8 @@ class GraphQLHelper {
     );
 
     final Link _link = HttpLink(
-      // 'http://192.168.0.15:5000',
-      'https://fundamentalista-api.herokuapp.com/',
+      'http://192.168.0.12:5000',
+      // 'https://fundamentalista-api.herokuapp.com/',
     );
 
     client = GraphQLClient(

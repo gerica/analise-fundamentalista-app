@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fundamentalista_app/ui/page/BasePage.dart';
 import 'package:fundamentalista_app/ui/viewModel/PapelViewModel.dart';
+import 'package:fundamentalista_app/widget/CardFund.dart';
 import 'package:fundamentalista_app/widget/NavitationDrawer.dart';
 import 'package:fundamentalista_app/widget/PrimaryButton.dart';
 import 'package:provider/provider.dart';
@@ -22,29 +24,62 @@ class _ConfigurarPageState extends State<ConfigurarPage> with BasePage {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Fundamentalistas'),
       ),
       drawer: NavigationDrawer(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            PrimaryButton(
-              width: size.width * 0.7,
+      body: _buildContent(context),
+      // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    if (kIsWeb) {
+      return _buildContentWeb(context);
+    }
+    return _buildContentMobile(context);
+  }
+
+  Widget _buildContentWeb(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Realizar carga"),
+          SizedBox(height: 20),
+          CardFund(
+            child: PrimaryButton(
+              width: 70,
               titleText: "Carga",
               textStyle: Theme.of(context).textTheme.button,
               onPressed: () {
                 this._carga(context);
               },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget _buildContentMobile(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          PrimaryButton(
+            width: size.width * 0.7,
+            titleText: "Carga",
+            textStyle: Theme.of(context).textTheme.button,
+            onPressed: () {
+              this._carga(context);
+            },
+          ),
+        ],
+      ),
     );
   }
 

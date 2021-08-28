@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fundamentalista_app/domain/model/Parametro.dart';
 import 'package:fundamentalista_app/ui/page/BasePage.dart';
@@ -46,70 +47,21 @@ class _ParametroPageState extends State<ParametroPage> with BasePage {
       ),
       drawer: NavigationDrawer(),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: _buildParams(context),
-        ),
+        // child: SingleChildScrollView(
+        child: _buildContent(context),
+        // ),
       ),
     );
   }
 
-  Widget _buildParams(BuildContext context) {
-    var viewModel = Provider.of<ParametroViewModel>(context, listen: true);
-    if (viewModel.loading) {
-      return this.buildLoading();
+  Widget _buildContent(BuildContext context) {
+    if (kIsWeb) {
+      return _buildContentWeb(context);
     }
-    Size size = MediaQuery.of(context).size;
-    List<Widget> cards = [];
-    if (viewModel.lista.isNotEmpty) {
-      viewModel.lista.forEach((Parametro param) {
-        InputHelper _field = InputHelper.text();
-        String? _fieldError;
-        _field.text = param.valorRef.toString();
-        cards.add(
-          CardFund(
-            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
-            child: Column(
-              children: [
-                Container(
-                  width: size.width * 0.9,
-                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      children: <Widget>[..._buildForm(context, param, _field, _fieldError)],
-                      // children: [Text("Teste")],
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 10, bottom: 5, right: 10),
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: PrimaryButton(
-                      onPressed: () => {_salvarParametro(param, _field, _fieldError)},
-                      titleText: 'Salvar',
-                      width: size.width * 0.4,
-                      textStyle: Theme.of(context).textTheme.button,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      });
-    }
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [SizedBox(height: sizeBetween), ...cards],
-      ),
-    );
+    return _buildContentMobile(context);
   }
 
   List<Widget> _buildForm(BuildContext context, Parametro param, InputHelper field, String? fieldError) {
-    Size size = MediaQuery.of(context).size;
     List<Widget> result = [];
     result.add(SizedBox(height: sizeBetween));
     TextStyle? bodyText2 = Theme.of(context).textTheme.bodyText2;
@@ -133,7 +85,7 @@ class _ParametroPageState extends State<ParametroPage> with BasePage {
       children: [
         Text("Valor: "),
         Container(
-          width: size.width * 0.4,
+          width: 100,
           child: TextFieldFund(
             addLabel: false,
             hint: "Valor",
@@ -222,5 +174,122 @@ class _ParametroPageState extends State<ParametroPage> with BasePage {
 
     setState(() {});
     return isValid;
+  }
+
+  Widget _buildContentWeb(BuildContext context) {
+    // Size size = MediaQuery.of(context).size;
+    var viewModel = Provider.of<ParametroViewModel>(context, listen: true);
+    if (viewModel.loading) {
+      return this.buildLoading();
+    }
+    List<Widget> cards = [];
+    if (viewModel.lista.isNotEmpty) {
+      viewModel.lista.forEach((Parametro param) {
+        InputHelper _field = InputHelper.text();
+        String? _fieldError;
+        _field.text = param.valorRef.toString();
+        cards.add(
+          Container(
+            width: 250,
+            child: CardFund(
+              // margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        children: <Widget>[..._buildForm(context, param, _field, _fieldError)],
+                        // children: [Text("Teste")],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 5, right: 10),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: PrimaryButton(
+                        onPressed: () => {_salvarParametro(param, _field, _fieldError)},
+                        titleText: 'Salvar',
+                        width: 71,
+                        textStyle: Theme.of(context).textTheme.button,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+    }
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Wrap(
+        direction: Axis.horizontal,
+        spacing: 5,
+        runSpacing: 12,
+        children: [...cards],
+      ),
+    );
+  }
+
+  Widget _buildContentMobile(BuildContext context) {
+    var viewModel = Provider.of<ParametroViewModel>(context, listen: true);
+    if (viewModel.loading) {
+      return this.buildLoading();
+    }
+    Size size = MediaQuery.of(context).size;
+    List<Widget> cards = [];
+    if (viewModel.lista.isNotEmpty) {
+      viewModel.lista.forEach((Parametro param) {
+        InputHelper _field = InputHelper.text();
+        String? _fieldError;
+        _field.text = param.valorRef.toString();
+        cards.add(
+          CardFund(
+            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+            child: Column(
+              children: [
+                Container(
+                  width: size.width * 0.9,
+                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      children: <Widget>[..._buildForm(context, param, _field, _fieldError)],
+                      // children: [Text("Teste")],
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 10, bottom: 5, right: 10),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: PrimaryButton(
+                      onPressed: () => {_salvarParametro(param, _field, _fieldError)},
+                      titleText: 'Salvar',
+                      width: size.width * 0.4,
+                      textStyle: Theme.of(context).textTheme.button,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+    }
+
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [SizedBox(height: sizeBetween), ...cards],
+        ),
+      ),
+    );
   }
 }
