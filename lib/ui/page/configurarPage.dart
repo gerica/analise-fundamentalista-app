@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:fundamentalista_app/ui/page/BasePage.dart';
 import 'package:fundamentalista_app/ui/viewModel/PapelViewModel.dart';
 import 'package:fundamentalista_app/widget/CardFund.dart';
+import 'package:fundamentalista_app/widget/FundDialog.dart';
 import 'package:fundamentalista_app/widget/NavitationDrawer.dart';
 import 'package:fundamentalista_app/widget/PrimaryButton.dart';
 import 'package:provider/provider.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 // import 'dart:developer' as developer;
 
 class ConfigurarPage extends StatefulWidget {
@@ -84,7 +86,10 @@ class _ConfigurarPageState extends State<ConfigurarPage> with BasePage {
   }
 
   Future<void> _carga(BuildContext context) async {
+    ProgressDialog? progress;
+
     try {
+      progress = await FundDialog().customProgress(context, 'Espere...');
       var viewModel = Provider.of<PapelViewModel>(context, listen: false);
       await viewModel.carga();
 
@@ -94,6 +99,10 @@ class _ConfigurarPageState extends State<ConfigurarPage> with BasePage {
       displaySnackBar(context, viewModel.message);
     } catch (error) {
       displaySnackBarError(context, error.toString());
+    }
+
+    if (progress != null) {
+      progress.close();
     }
   }
 }

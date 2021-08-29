@@ -1,3 +1,4 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +7,14 @@ import 'package:fundamentalista_app/ui/page/BasePage.dart';
 import 'package:fundamentalista_app/ui/viewModel/ParametroViewModel.dart';
 import 'package:fundamentalista_app/widget/CardFund.dart';
 import 'package:fundamentalista_app/widget/FieldTextFund.dart';
+import 'package:fundamentalista_app/widget/FundDialog.dart';
 import 'package:fundamentalista_app/widget/InputHelper.dart';
 import 'package:fundamentalista_app/widget/NavitationDrawer.dart';
 import 'package:fundamentalista_app/widget/PrimaryButton.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer' as developer;
+
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class ParametroPage extends StatefulWidget {
   const ParametroPage({Key? key}) : super(key: key);
@@ -19,20 +23,35 @@ class ParametroPage extends StatefulWidget {
   _ParametroPageState createState() => _ParametroPageState();
 }
 
-class _ParametroPageState extends State<ParametroPage> with BasePage {
+class _ParametroPageState extends State<ParametroPage> with BasePage, AfterLayoutMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final double sizeBetween = 10;
 
   @override
   void initState() {
-    this._initDados();
+    // this._initDados();
     super.initState();
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    this._initDados();
   }
 
   _initDados() async {
     developer.log("Init dados", name: this.toString());
-    var viewModel = Provider.of<ParametroViewModel>(context, listen: false);
-    await viewModel.recuperar();
+    ProgressDialog? progress;
+
+    try {
+      progress = await FundDialog().customProgress(context, 'Espere...');
+      var viewModel = Provider.of<ParametroViewModel>(context, listen: false);
+      await viewModel.recuperar();
+    } catch (error) {
+      displaySnackBarError(context, error.toString());
+    }
+    if (progress != null) {
+      progress.close();
+    }
   }
 
   @override

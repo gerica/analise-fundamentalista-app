@@ -1,7 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fundamentalista_app/ui/page/homePage.dart';
-import 'package:fundamentalista_app/ui/page/tabelaMagicaPage.dart';
 import 'package:fundamentalista_app/ui/viewModel/PapelViewModel.dart';
 import 'package:fundamentalista_app/ui/viewModel/ParametroViewModel.dart';
 import 'package:provider/provider.dart';
@@ -43,8 +42,8 @@ class FundamentalistaAPP extends StatelessWidget {
         home: AnimatedSplashScreen(
           duration: 3000,
           splash: Icons.monetization_on_outlined,
-          // nextScreen: HomePage(),
-          nextScreen: TabelaMagicaPage(),
+          nextScreen: HomePage(),
+          // nextScreen: TabelaMagicaPage(),
           splashTransition: SplashTransition.fadeTransition,
           // pageTransitionType: PageTransitionType.scale,
           backgroundColor: Colors.amber,
