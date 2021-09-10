@@ -9,18 +9,19 @@ class GraphQLHelper {
     );
 
     final Link _link = HttpLink(
-      'http://192.168.0.16:5000',
+      'http://192.168.0.14:5000',
       // 'https://fundamentalista-api.herokuapp.com/',
+      // httpClient:
     );
 
     client = GraphQLClient(
       cache: GraphQLCache(),
       link: _link,
-      defaultPolicies: DefaultPolicies(
-        watchQuery: policies,
-        query: policies,
-        mutate: policies,
-      ),
+      // defaultPolicies: DefaultPolicies(
+      //   watchQuery: policies,
+      //   query: policies,
+      //   mutate: policies,
+      // ),
     );
   }
 }

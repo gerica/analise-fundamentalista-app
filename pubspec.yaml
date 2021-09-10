@@ -42,6 +42,9 @@ dependencies:
   url_launcher: ^6.0.8
   animated_splash_screen: ^1.1.0
   sn_progress_dialog: ^1.0.3
+  universal_html: ^2.0.8
+  flutter_secure_storage: ^4.2.1
+  logger: ^1.1.0
 
 dev_dependencies:
   flutter_test:
